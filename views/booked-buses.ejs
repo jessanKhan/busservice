@@ -1,0 +1,99 @@
+<!-- booked-buses.ejs -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Booked Buses</title>
+  <style>
+    /* Your existing styles... */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 100px;
+      color: #333;
+    }
+
+    h2 {
+      text-align: center;
+      color: #666;
+    }
+
+    .profile-container {
+      max-width: 300px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    p {
+      margin-bottom: 10px;
+      font-weight: bold;
+      color: #666;
+    }
+
+    a {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #333;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #555;
+    }
+
+    .booked-buses {
+      margin-top: 20px;
+    }
+
+    .booked-buses h3 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .booked-buses-item {
+      background-color: #fff;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Booked Buses</h1>
+  
+  <div class="profile-container">
+    <h2>Your Booked Buses</h2>
+    
+    <div class="booked-buses">
+      <h3>Booked Buses:</h3>
+      <% if (user.bookedBuses.length > 0) { %>
+        <% user.bookedBuses.forEach(function(booking) { %>
+          <div class="booked-buses-item">
+            <p><strong>Bus Name:</strong> <%= booking.bus.name %></p>
+            <p><strong>Bus Number:</strong> <%= booking.bus.busNo %></p>
+            <p><strong>Bus Number:</strong> <%= booking.bus.startLocation %></p>
+            <p><strong>Bus Number:</strong> <%= booking.bus.endLocation %></p>
+            <p><strong>Bus Number:</strong> <%= booking.bus.departureTime %></p>
+            <p><strong>Seat Number:</strong> <%= booking.seatNumber %></p>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <p>No buses booked yet.</p>
+      <% } %>
+    </div>
+    
+    <a href="/auth/login">Logout</a>
+  </div>
+</body>
+</html>

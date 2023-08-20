@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Book a Seat</title>
+  <style>
+    /* Your existing styles... */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 100px;
+      color: #333;
+    }
+
+    h2 {
+      text-align: center;
+      color: #666;
+    }
+
+    .book-seat-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .seat-layout {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr); /* Adjust the number of columns as needed */
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .seat-button {
+      width: 50px;
+      height: 50px;
+      background-color: #ccc;
+      border: 1px solid #999;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    /* Define different styles for available, booked, and selected seats */
+    .seat-button.available {
+      background-color: #4CAF50;
+      color: #fff;
+    }
+
+    .seat-button.booked {
+      background-color: #F44336;
+      color: #fff;
+    }
+
+    .seat-button.selected {
+      background-color: blue;
+      color: #fff;
+    }
+
+    a {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #333;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #555;
+    }
+
+    .selected-seat {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .save-button {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .save-button:hover {
+      background-color: #45a049;
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      let selectedSeat = null;
+  
+      function handleSeatClick(event) {
+        const seatButton = event.target;
+        const seatNumber = seatButton.getAttribute('data-seat-number');
+  
+        if (seatButton.classList.contains('available')) {
+          // Check if a seat is already selected
+          if (selectedSeat !== null) {
+            alert('You can only book one seat at a time.');
+            return;
+          }
+  
+          // Seat is available, book it
+          seatButton.classList.remove('available');
+          seatButton.classList.add('booked', 'selected');
+          selectedSeat = seatNumber;
+  
+          // Set the selected seat in the hidden input field
+          document.getElementById('selectedSeat').value = seatNumber;
+        } else if (seatButton.classList.contains('booked')) {
+          alert(`Seat ${seatNumber} is already booked.`);
+        }
+      }
+  
+      function handleSaveClick() {
+        if (selectedSeat !== null) {
+          // TODO: Send a request to book the selected seat
+          // You can include the bus ID and selected seat number in the request
+          alert(`Seat ${selectedSeat} booked!`);
+          selectedSeat = null;
+          // Reset selected seat after booking
+        } else {
+          alert('Please select a seat before clicking "Save".');
+        }
+      }
+      const saveButton = document.querySelector('.save-button');
+      saveButton.addEventListener('click', handleSaveClick);
+  
+      const seatButtons = document.querySelectorAll('.seat-button');
+      seatButtons.forEach((seatButton) => {
+        seatButton.addEventListener('click', handleSeatClick);
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>Book a Seat</h1>
+
+  <div class="book-seat-container">
+    <h2>Select a Seat:</h2>
+    <h2>Student Id: <%=user.id%></h2>
+
+    <div class="seat-layout">
+      <!-- Generate seat elements dynamically based on bus layout -->
+      <% for (let i = 1; i <= bus.totalSeats; i++) { %>
+        <button
+          class="seat-button <%= bus.bookedSeats.includes(i) ? 'booked' : 'available' %>"
+          data-seat-number="<%= i %>">
+          Seat <%= i %>
+        </button>
+      <% } %>
+    </div>
+
+    <p class="selected-seat"></p>
+
+    <a href="/user/booked-buses">View Booked Buses</a>
+    
+    <form action="/book-seat?busNo=<%= bus.busNo %>&userId=<%=user._id%>" method="POST">
+      <input type="hidden" name="selectedSeat" id="selectedSeat" value="">
+      <button type="submit" class="save-button">Save</button>
+    </form>
+  </div>
+</body>
+</html>

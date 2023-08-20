@@ -1,0 +1,88 @@
+<!-- addBusRoute.ejs -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Bus Route</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #666;
+    }
+
+    input[type="text"],
+    input[type="time"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button[type="submit"] {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Add Bus Route</h1>
+
+    <form action="/admin/routes/add" method="POST">
+      <label for="busNo">Bus Number:</label>
+      <input type="text" id="busNo" name="busNo" required>
+
+      <label for="name">Route Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="startLocation">Start Location:</label>
+      <input type="text" id="startLocation" name="startLocation" required>
+
+      <label for="endLocation">End Location:</label>
+      <input type="text" id="endLocation" name="endLocation" required>
+
+      <label for="departureTime">Departure Time:</label>
+      <input type="time" id="departureTime" name="departureTime" required>
+
+      <button type="submit">Add Route</button>
+    </form>
+  </div>
+</body>
+</html>
